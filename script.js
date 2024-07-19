@@ -20,16 +20,16 @@ document.addEventListener('DOMContentLoaded', function(){
         listItem.appendChild(removeButton);
         taskList.appendChild(listItem);
         taskInput.value = '';
-    
+    }
 
     addButton.addEventListener('click', addTask);
-    taskInput.addEventListener('keypress', function(event){
+    taskInput.addEventListener('keypress', function(event) {
         if (event.key === "Enter"){
         addTask();
-    }});
+    
+}});
     
 
 
-}
 });
 
