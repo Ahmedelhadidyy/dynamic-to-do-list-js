@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function(){
         taskList.appendChild(listItem);
         taskInput.value = '';
     
-    }
+
     addButton.addEventListener('click', addTask);
     taskInput.addEventListener('keypress', function(event){
         if (event.key === "Enter"){
@@ -30,6 +30,6 @@ document.addEventListener('DOMContentLoaded', function(){
     
 
 
-
+}
 });
 
