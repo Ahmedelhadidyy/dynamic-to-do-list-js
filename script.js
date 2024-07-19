@@ -3,7 +3,13 @@ document.addEventListener('DOMContentLoaded', function(){
     const taskInput = document.getElementById('task-input');
     const taskList = document.getElementById('task-list');
 
-    function addTask() {
+
+    function loadTasks() {
+        const storedTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+        storedTasks.forEach(taskText => addTask(taskText, false));
+    }
+
+    function addTask(taskText, save = true) {
         const taskText = taskInput.value.trim();
         if (taskText === '') {
             alert('Please enter a task.');
@@ -16,18 +22,43 @@ document.addEventListener('DOMContentLoaded', function(){
         removeButton.classList.add('remove-btn');
         removeButton.addEventListener('click' , function(){
             listItem.remove();
+            removeTaskFromStorage(taskText);
         })
         listItem.appendChild(removeButton);
         taskList.appendChild(listItem);
         taskInput.value = '';
+        if (save) {
+            const storedTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+            storedTasks.push(taskText);
+            localStorage.setItem('tasks', JSON.stringify(storedTasks));
+        }
     }
 
-    addButton.addEventListener('click', addTask);
+    function removeTaskFromStorage(taskText) {
+        let storedTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+        storedTasks = storedTasks.filter(task => task !== taskText);
+        localStorage.setItem('tasks', JSON.stringify(storedTasks));
+    }
+
+    addButton.addEventListener('click', function() {
+        const taskText = taskInput.value.trim();
+        if (taskText !== "") {
+            addTask(taskText);
+        } else {
+            alert("Please enter a task.");
+        }});
     taskInput.addEventListener('keypress', function(event) {
         if (event.key === "Enter"){
-        addTask();
+            const taskText = taskInput.value.trim();
+            if (taskText !== "") {
+                addTask(taskText);
+            } else {
+                alert("Please enter a task.");
+            }
     
-}});
+}
+loadTasks();
+});
     
 
 
